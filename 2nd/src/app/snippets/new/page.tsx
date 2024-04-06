@@ -1,9 +1,7 @@
 "use client";
 
-import { db } from "@/db/index";
 import { useFormState } from "react-dom";
 import React from "react";
-import { redirect } from "next/navigation";
 import { createSnippet } from "@/actions/index";
 
 function SnippetCreatePage() {

@@ -21,6 +21,8 @@ async function SnippetShowPage({ params: { id } }: SnippetShowPageProps) {
   }
 
   // actions.deleteSnippetの既にIDが引数にセットされているバージョンをコピペ
+  // 毎回idをセットする必要がなくなるから可読性の向上
+  // https://shorturl.at/cotOP
   const deleteSnippetAction = actions.deleteSnippet.bind(null, snippet.id);
 
   return (
@@ -44,3 +46,13 @@ async function SnippetShowPage({ params: { id } }: SnippetShowPageProps) {
 }
 
 export default SnippetShowPage;
+
+export async function generateStaticParams() {
+  const snippets = await db.snippet.findMany();
+
+  return snippets.map((snippet) => {
+    return {
+      id: String(snippet.id),
+    };
+  });
+}

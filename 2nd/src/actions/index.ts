@@ -2,6 +2,7 @@
 // all functions are gonna be treated as server actions
 
 import { db } from "@/db/index";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function editSnippet(id: number, code: string) {
@@ -13,7 +14,7 @@ export async function editSnippet(id: number, code: string) {
       code,
     },
   });
-
+  revalidatePath(`/snippets/${id}`);
   redirect(`/snippets/${id}`);
 }
 
@@ -23,6 +24,7 @@ export async function deleteSnippet(id: number) {
       id,
     },
   });
+  revalidatePath("/");
   redirect("/");
 }
 
@@ -54,6 +56,7 @@ export async function createSnippet(
         code,
       },
     });
+    revalidatePath("/");
   } catch (error) {
     if (error instanceof Error) {
       return {
